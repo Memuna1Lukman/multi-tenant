@@ -5,11 +5,11 @@ from sqlalchemy.orm import Session
 from typing import List
 
 router = APIRouter(
-    prefix="/workspaces/{workspace_id}/",
+    prefix="/workspaces/{workspace_id}",
     tags=["Members"]
 )
 
-@router.get("/members",response_model=List[schemas.ListAllMembersh])
+@router.get("/members",response_model=List[schemas.ListAllMembers])
 def get_all_members(workspace_id:int,db:Session = Depends(get_db),current_user:models.Users = Depends(oauth.get_current_user)):
     membership = db.query(models.MemberShip).filter(
         models.MemberShip.user_id == current_user.id,
@@ -46,3 +46,12 @@ def del_user(user_id:int,workspace_id:int,db:Session = Depends(get_db),current_u
     db.delete(target_users)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+
+@router.post("/")
+def add_members(db:Session = Depends(get_db),current_user: models.Users = Depends(oauth.get_current_user)):
+
+    db.add()
+    db.commit()
+    db.refresh()

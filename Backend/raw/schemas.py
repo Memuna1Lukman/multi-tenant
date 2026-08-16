@@ -20,7 +20,7 @@ class UserInputs(BaseModel):
     email: str
     password_hash: str
     full_name: str
-    avatar_url:str
+    avatar_url:Optional[str]=None
     model_config = {"from_attributes": True}
 
 class CreateWorkSpace(BaseModel):
@@ -49,7 +49,7 @@ class CreateProject(BaseModel):
     name: str
     description:str
     status: Optional[str] = None
-    created_by_user_id = Optional[int] = None
+    created_by_user_id:Optional[int] = None
     created_at : Optional[datetime] = None
     updated_at : Optional[datetime] = None
     model_config = {"from_attributes": True}  
@@ -60,7 +60,7 @@ class ProjectResponse(BaseModel):
     name: str
     description:str
     status: Optional[str] = None
-    created_by_user_id = Optional[int] = None
+    created_by_user_id: Optional[int] = None
     created_at : Optional[datetime] = None
     updated_at : Optional[datetime] = None 
 
@@ -72,23 +72,24 @@ class CreateTasks(BaseModel):
     description:str
     status: Optional[str] = None
     priority: Optional[str] = None
-    assigned_to_user_id = Optional[int] = None
-    created_by_user_id = Optional[int] = None
-    due_date = Optional[datetime] = None
+    assigned_to_user_id: Optional[int] = None
+    created_by_user_id :Optional[int] = None
+    due_date: Optional[datetime] = None
     created_at : Optional[datetime] = None
     updated_at : Optional[datetime] = None 
     model_config = {"from_attributes": True} 
 
 
 class TaskResponse(BaseModel):
+    id: Optional[int] = None
     project_id : int
     title:str
     description:str
     status: Optional[str] = None
     priority: Optional[str] = None
-    assigned_to_user_id = Optional[int] = None
-    created_by_user_id = Optional[int] = None
-    due_date = Optional[datetime] = None
+    assigned_to_user_id:Optional[int] = None
+    created_by_user_id:Optional[int] = None
+    due_date : Optional[datetime] = None
     created_at : Optional[datetime] = None
 
 

@@ -25,7 +25,7 @@ def create_new_user(user:schemas.UserInputs,db:Session = Depends(get_db)):
 
 
 @router.get("/me",response_model=schemas.UserResponse)
-def get_me(db:Session = Depends(get_db),current_user:int = Depends(oauth)):
+def get_me(db:Session = Depends(get_db),current_user:int = Depends(oauth.get_current_user)):
     query_user = db.query(models.Users).filter(
         models.Users.id == current_user.id
     )
