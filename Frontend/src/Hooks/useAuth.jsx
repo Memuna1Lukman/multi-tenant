@@ -49,7 +49,7 @@ export default function AuthProvider({children}) {
         try {
             setLoading(true)
             await loginUser(form)
-            const profile =await getMe()
+            const profile = await getMe()
             setUser(profile)
             return profile
             
@@ -65,8 +65,10 @@ export default function AuthProvider({children}) {
         try {
             setLoading(true)
             await logoutUser()
+            setUser(null)
         } catch (error) {
             console.log("The error is", error)
+            setUser(null)
             throw error
         }
         finally{

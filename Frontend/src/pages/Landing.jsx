@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'motion/react';
 
 // Staggered entrance variants for hero section

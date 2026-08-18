@@ -31,7 +31,7 @@ export async function createUser(formData) {
 export async function loginUser(data) {
     const formData = new URLSearchParams()
     formData.append('username', data.username || data.email)
-    formData.append('password', data.hash_password)
+    formData.append('password', data.password_hash)
     try {
         const response = await fetch(`${API_URL}/auth/login`,{
             method:'POST',
@@ -59,15 +59,15 @@ export async function loginUser(data) {
 }
 
 
-export async function logoutUser(data) {
+export async function logoutUser() {
     try {
         const response = await fetch(`${API_URL}/auth/logout`,{
             method: 'POST',
-            headers:{'Content-Type': 'application-x-www-form-urlencoded'},
+            headers:{'Content-Type': 'application/x-www-form-urlencoded'},
             credentials:'include'
         })
         if(!response.ok){
-            throw new Erro("Log out failed")
+            throw new Error("Log out failed")
         }
         return await response.json()
         

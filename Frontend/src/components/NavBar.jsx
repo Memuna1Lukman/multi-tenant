@@ -1,8 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import logo from '../assets/logos.png';
+import { useAuth } from '../Hooks/useAuth';
 
 export default function NavBar() {
+  const { user } = useAuth();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   // Common style for links to handle active states nicely
   const getNavLinkClass = ({ isActive }) =>
     `transition-colors duration-200 hover:text-white ${
@@ -40,23 +44,36 @@ export default function NavBar() {
 
         {/* Action Buttons & Mobile Menu Icon */}
         <div className="flex items-center gap-4">
-          <Link
-            to="/login"
-            className="text-sm text-emerald-50 hover:text-white font-medium px-3 py-2 transition-colors"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="text-sm bg-[#164e51] hover:bg-[#113e40] text-emerald-100 font-medium px-5 py-2 rounded-full transition-all duration-200 border border-emerald-400/20 shadow-inner"
-          >
-            Register
-          </Link>
+          {user ? (
+            <Link
+              to="/dashboard"
+              className="text-sm bg-[#164e51] hover:bg-[#113e40] text-emerald-100 font-medium px-5 py-2 rounded-full transition-all duration-200 border border-emerald-400/20 shadow-inner flex items-center gap-2"
+            >
+              <span>Dashboard</span>
+              <span className="text-xs">→</span>
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-sm text-emerald-50 hover:text-white font-medium px-3 py-2 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="text-sm bg-[#164e51] hover:bg-[#113e40] text-emerald-100 font-medium px-5 py-2 rounded-full transition-all duration-200 border border-emerald-400/20 shadow-inner"
+              >
+                Register
+              </Link>
+            </>
+          )}
 
-          {/* Optional: Mobile Hamburger Menu Icon from screenshot */}
+          {/* Mobile Hamburger Menu Icon */}
           <button 
             type="button" 
             aria-label="Toggle Menu"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="md:hidden text-white hover:text-emerald-200 p-1"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,6 +83,59 @@ export default function NavBar() {
         </div>
 
       </nav>
+
+      {/* Mobile menu dropdown */}
+      {isMobileOpen && (
+        <div className="md:hidden mt-3 pt-3 border-t border-white/10 flex flex-col gap-2.5 pb-2">
+          <Link
+            to="/"
+            onClick={() => setIsMobileOpen(false)}
+            className="text-sm text-emerald-100/90 hover:text-white px-2 py-1"
+          >
+            Home
+          </Link>
+          <Link
+            to="/services"
+            onClick={() => setIsMobileOpen(false)}
+            className="text-sm text-emerald-100/90 hover:text-white px-2 py-1"
+          >
+            Services
+          </Link>
+          <Link
+            to="/contact"
+            onClick={() => setIsMobileOpen(false)}
+            className="text-sm text-emerald-100/90 hover:text-white px-2 py-1"
+          >
+            Contact
+          </Link>
+          {!user ? (
+            <div className="flex items-center gap-3 pt-2">
+              <Link
+                to="/login"
+                onClick={() => setIsMobileOpen(false)}
+                className="text-sm text-emerald-200 font-medium px-3 py-1.5 rounded-lg bg-white/5"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                onClick={() => setIsMobileOpen(false)}
+                className="text-sm text-white font-medium px-4 py-1.5 rounded-lg bg-[#164e51]"
+              >
+                Register
+              </Link>
+            </div>
+          ) : (
+            <Link
+              to="/dashboard"
+              onClick={() => setIsMobileOpen(false)}
+              className="text-sm text-white font-medium px-4 py-2 rounded-lg bg-[#164e51] text-center"
+            >
+              Go to Dashboard
+            </Link>
+          )}
+        </div>
+      )}
     </header>
   );
 }

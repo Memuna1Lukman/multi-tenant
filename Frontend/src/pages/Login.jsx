@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useAuth } from '../Hooks/useAuth';
 
@@ -32,11 +32,11 @@ const itemVariants = {
 };
 
 export default function Login() {
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
-  const [error,setError] = useState("")
-  const navigate = useNavigate()
-  const { login,loading } = useAuth()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const handleSubmit = async (e)=>{
       e.preventDefault()
       setError("")

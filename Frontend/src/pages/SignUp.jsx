@@ -1,7 +1,8 @@
-import React, { useState} from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useAuth } from '../Hooks/useAuth';
+
 // Staggered entrance variants for smooth loading
 const containerVariants = {
   hidden: { opacity: 0, y: 24, scale: 0.98 },
@@ -31,11 +32,11 @@ const itemVariants = {
 };
 
 export default function SignUp() {
-  const [email,setEmail] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [password,setPassword] = useState('')
-  const [error,setError] = useState('')
-  const { register,loading } = useAuth()
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { register } = useAuth();
   const navigate = useNavigate()
   const handleSubmit= async(e)=>{
     e.preventDefault()

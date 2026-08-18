@@ -1,2 +1,55 @@
-
 @import "tailwindcss";
+
+/* Custom Scrollbar for Sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 153, 0.2);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(52, 211, 153, 0.4);
+}
+
+/* Explicit Media Queries for Responsive Sidebar/Navbar Behavior */
+@media screen and (max-width: 767px) {
+  /* On mobile phones, Sidebar adapts as the top Navbar */
+  .desktop-sidebar {
+    display: none !important;
+  }
+  .mobile-navbar {
+    display: flex !important;
+  }
+  .dashboard-main-content {
+    margin-left: 0 !important;
+    padding-top: 5rem !important; /* space for fixed mobile top navbar */
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* On desktop screens, full vertical sidebar */
+  .desktop-sidebar {
+    display: flex !important;
+  }
+  .mobile-navbar {
+    display: none !important;
+  }
+  .dashboard-main-content {
+    margin-left: 16rem !important; /* 64 (16rem) or 72 (18rem) */
+    padding-top: 2rem !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .dashboard-main-content {
+    margin-left: 18rem !important; /* 72 (18rem) */
+  }
+}

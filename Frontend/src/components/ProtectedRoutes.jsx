@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Hooks/useAuth";
-import React, { Children } from 'react'
 
 
 export default function ProtectedRoutes({children}) {
