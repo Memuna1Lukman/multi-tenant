@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link,useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useAuth } from '../Hooks/useAuth';
 
 // Staggered entrance variants for smooth loading
 const containerVariants = {
@@ -31,6 +32,23 @@ const itemVariants = {
 };
 
 export default function Login() {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  const [error,setError] = useState("")
+  const navigate = useNavigate()
+  const { login,loading } = useAuth()
+  const handleSubmit = async (e)=>{
+      e.preventDefault()
+      setError("")
+      try {
+        await login({email,"password_hash":password})
+        navigate('/dashboard')
+      } catch (error) {
+        console.log("The error is ",error)
+        setError(error.message || "An unexpected error occurred")
+      }
+
+  }
   
   return (
     <div className="min-h-screen bg-linear-to-b from-[#2d6260] via-[#204947] to-[#122b2a] flex items-center justify-center pt-20 pb-5 px-4">
@@ -91,13 +109,20 @@ export default function Login() {
             <p className="text-xs text-emerald-100/60">Enter your credentials to continue</p>
           </motion.div>
 
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Field */}
+            {error && (
+                <div className="p-3 text-xs bg-red-500/15 border border-red-500/30 text-red-200 rounded-xl">
+                  {error}
+                </div>
+            )}
             <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
               <label htmlFor="email" className="text-xs font-medium text-emerald-100/80">
                 Email Address
               </label>
               <input 
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
                 type="email" 
                 id="email"
                 placeholder="name@company.com"
@@ -113,6 +138,8 @@ export default function Login() {
                 </label>
               </div>
               <input 
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 type="password" 
                 id="password"
                 placeholder="password"

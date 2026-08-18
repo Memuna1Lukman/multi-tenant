@@ -31,9 +31,9 @@ export async function createUser(formData) {
 export async function loginUser(data) {
     const formData = new URLSearchParams()
     formData.append('username', data.username || data.email)
-    formData.append('password', data.password)
+    formData.append('password', data.hash_password)
     try {
-        const response = await fetch(`${API_URL}/auth/login/`,{
+        const response = await fetch(`${API_URL}/auth/login`,{
             method:'POST',
             headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
             body: formData.toString(),
@@ -53,7 +53,7 @@ export async function loginUser(data) {
         return result
         
     } catch (error) {
-        console.log("The login was not successful",err)
+        console.log("The login was not successful",error)
         throw error
     }
 }

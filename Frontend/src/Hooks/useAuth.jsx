@@ -43,9 +43,40 @@ export default function AuthProvider({children}) {
             setLoading(false);
         }
     }
+    async function login(form){
+        setLoading(true)
+        setError(null)
+        try {
+            setLoading(true)
+            await loginUser(form)
+            const profile =await getMe()
+            setUser(profile)
+            return profile
+            
+        } catch (error) {
+            console.log("The error is ", error)
+            throw error
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+    async function logOut(){
+        try {
+            setLoading(true)
+            await logoutUser()
+        } catch (error) {
+            console.log("The error is", error)
+            throw error
+        }
+        finally{
+            setLoading(false)
+        }
+    }
+
 
   return (
-    <AuthContext.Provider value={{ register, loading, user, error }}>
+    <AuthContext.Provider value={{ register, loading, user, error,login,logOut }}>
         {children}
     </AuthContext.Provider>
   )
